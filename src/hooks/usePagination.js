@@ -1,43 +1,26 @@
 export const DOTS = "...";
 
-function usePagination({
-  currentPage,
-  totalCount,
-  pageSize,
-  currentPageDataLength,
-}) {
-  const numberOfPages = totalCount / pageSize;
-  const hasDecimals = totalCount % pageSize;
-  const lastPageNumber =
-    hasDecimals !== 0 ? parseInt(numberOfPages, 10) + 1 : numberOfPages;
+function usePagination({ currentPage, totalCount, pageSize }) {
+  const numberOfPages = Math.ceil(totalCount / pageSize);
 
-  if (currentPageDataLength === 0)
+  if (numberOfPages === 3) return [1, 2, 3];
+
+  if (numberOfPages === 2) return [1, 2];
+
+  if (numberOfPages === 1) return [1];
+
+  if (
+    numberOfPages - currentPage === 0 ||
+    numberOfPages - currentPage < 0 ||
+    numberOfPages - currentPage === 1 ||
+    numberOfPages - currentPage < 1
+  )
     return [
       1,
       DOTS,
-      currentPage - 1,
-      currentPage,
-      currentPage + 1,
-      DOTS,
-      lastPageNumber,
-    ];
-
-  if (lastPageNumber - currentPage === 0 || lastPageNumber - currentPage < 0)
-    return [
-      1,
-      DOTS,
-      lastPageNumber - 2 <= 1 ? DOTS : lastPageNumber - 2,
-      lastPageNumber - 1,
-      lastPageNumber,
-    ];
-
-  if (lastPageNumber - currentPage === 1 || lastPageNumber - currentPage < 1)
-    return [
-      1,
-      DOTS,
-      currentPage - 2 < 1 ? DOTS : currentPage - 1,
-      currentPage,
-      lastPageNumber,
+      numberOfPages - 2 <= 1 ? DOTS : numberOfPages - 2,
+      numberOfPages - 1,
+      numberOfPages,
     ];
 
   if (currentPage > 2)
@@ -48,15 +31,15 @@ function usePagination({
       currentPage,
       currentPage + 1,
       DOTS,
-      lastPageNumber,
+      numberOfPages,
     ];
 
   return [
     1,
     2,
-    lastPageNumber - currentPage <= 1 ? DOTS : 3,
+    numberOfPages - currentPage <= 1 ? DOTS : 3,
     DOTS,
-    lastPageNumber,
+    numberOfPages,
   ];
 }
 
