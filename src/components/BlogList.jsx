@@ -11,6 +11,7 @@ function BlogList() {
   const currentPaginationData = () => {
     const startIndex = currentPage * pageSize - pageSize;
     const endIndex = startIndex + pageSize;
+
     return blogs.posts.slice(startIndex, endIndex);
   };
   const updateRowsPerPage = (newPageSizeValue) =>

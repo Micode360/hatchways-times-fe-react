@@ -86,7 +86,12 @@ function Pagination({
   });
 
   const onNext = () => {
-    if (currentPageDataLength < pageSize) return;
+    const numberOfPages = totalCount / pageSize;
+    const hasDecimals = totalCount % pageSize;
+    const lastPageNumber =
+      hasDecimals !== 0 ? parseInt(numberOfPages, 10) + 1 : numberOfPages;
+    if (lastPageNumber - currentPage === 0 || lastPageNumber - currentPage < 0)
+      return;
     onPageChange(currentPage + 1);
   };
 
