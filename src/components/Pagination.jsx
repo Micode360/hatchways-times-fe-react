@@ -84,10 +84,14 @@ function Pagination({
   });
 
   const onNext = () => {
+    const numberOfPages = Math.ceil(totalCount / pageSize);
+    if (numberOfPages - currentPage === 0 || numberOfPages - currentPage < 0)
+      return;
     onPageChange(currentPage + 1);
   };
 
   const onPrevious = () => {
+    if (currentPage - 1 < 1) return;
     onPageChange(currentPage - 1);
   };
 
@@ -110,7 +114,7 @@ function Pagination({
         return (
           <PaginationItem
             onClick={() => onPageChange(pageNumber)}
-            selected={false} // configure to properly show selected page
+            selected={false}
             key={key}
             className="pageButton"
           >
