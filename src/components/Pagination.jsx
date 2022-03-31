@@ -114,7 +114,7 @@ function Pagination({
         return (
           <PaginationItem
             onClick={() => onPageChange(pageNumber)}
-            selected={false} // configure to properly show selected page
+            selected={false}
             key={key}
             className="pageButton"
           >
