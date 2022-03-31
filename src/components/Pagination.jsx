@@ -76,18 +76,22 @@ function Pagination({
   currentPage,
   pageSize,
   pageSizeOptions,
+  currentPageDataLength,
 }) {
   const paginationRange = usePagination({
     currentPage,
     totalCount,
     pageSize,
+    currentPageDataLength,
   });
 
   const onNext = () => {
+    if (currentPageDataLength < pageSize) return;
     onPageChange(currentPage + 1);
   };
 
   const onPrevious = () => {
+    if (currentPage - 1 < 1) return;
     onPageChange(currentPage - 1);
   };
 
@@ -148,6 +152,7 @@ Pagination.propTypes = {
   pageSizeOptions: PropTypes.instanceOf(Array),
   onPageChange: PropTypes.func,
   onPageSizeOptionChange: PropTypes.func,
+  currentPageDataLength: PropTypes.number,
 };
 
 Pagination.defaultProps = {
@@ -157,6 +162,7 @@ Pagination.defaultProps = {
   pageSizeOptions: [15, 25, 50, 100],
   onPageChange: () => {},
   onPageSizeOptionChange: () => {},
+  currentPageDataLength: 0,
 };
 
 export default Pagination;
